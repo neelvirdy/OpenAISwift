@@ -17,6 +17,19 @@ public enum ChatRole: String, Codable {
     case assistant
 }
 
+/// A structure that represents a delta of a message stream in a chat conversation.
+public struct ChatMessageDelta: Codable {
+    /// The content delta of the message.
+    public let content: String?
+
+    /// Creates a new chat message delta with a given content.
+    /// - Parameters:
+    ///   - content: The content delta of the message.
+    public init(content: String?) {
+        self.content = content
+    }
+}
+
 /// A structure that represents a single message in a chat conversation.
 public struct ChatMessage: Codable {
     /// The role of the sender of the message.

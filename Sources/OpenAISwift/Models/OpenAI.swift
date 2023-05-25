@@ -24,7 +24,7 @@ public struct MessageResult: Payload {
 }
 
 public struct StreamMessageResult: Payload {
-    public let delta: ChatMessage
+    public let delta: ChatMessageDelta
 }
 
 public struct UsageResult: Codable {

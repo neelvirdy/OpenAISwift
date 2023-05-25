@@ -44,6 +44,7 @@ extension ServerSentEventsHandler: URLSessionDataDelegate {
         if let eventString = String(data: data, encoding: .utf8) {
             let lines = eventString.split(separator: "\n")
             for line in lines {
+
                 if line.hasPrefix("data:") {
                     if line == "data: [DONE]" {
                         onComplete?()
@@ -51,7 +52,7 @@ extension ServerSentEventsHandler: URLSessionDataDelegate {
                         processEvent(eventData)
                     } else {
                         // received something unexpected
-                        print(line)
+                        disconnect()
                     }
                 }
             }
