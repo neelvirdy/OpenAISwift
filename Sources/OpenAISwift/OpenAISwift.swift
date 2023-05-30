@@ -37,12 +37,26 @@ extension OpenAISwift {
     /// Send a Completion to the OpenAI API
     /// - Parameters:
     ///   - prompt: The Text Prompt
-    ///   - model: The AI Model to Use. Set to `OpenAIModelType.gpt3(.davinci)` by default which is the most capable model
+    ///   - model: The AI Model to Use. Set to `OpenAIModelType.gpt3(.ada)` by default which is the fastest and cheapest model
     ///   - maxTokens: The limit character for the returned response, defaults to 16 as per the API
     ///   - completionHandler: Returns an OpenAI Data Model
-    public func sendCompletion(with prompt: String, model: OpenAIModelType = .gpt3(.davinci), maxTokens: Int = 16, temperature: Double = 1, completionHandler: @escaping (Result<OpenAI<TextResult>, OpenAIError>) -> Void) {
+    public func sendCompletion(with prompt: String,
+                               model: OpenAIModelType = .gpt3(.ada),
+                               maxTokens: Int = 16,
+                               temperature: Double = 1,
+                               logitBias: [Int: Double]? = nil,
+                               frequencyPenalty: Double? = nil,
+                               stop: [String]? = nil,
+                               completionHandler: @escaping (Result<OpenAI<TextResult>, OpenAIError>) -> Void) {
         let endpoint = Endpoint.completions
-        let body = Command(prompt: prompt, model: model.modelName, maxTokens: maxTokens, temperature: temperature)
+        let body = Command(prompt: prompt,
+                           model: model.modelName,
+                           maxTokens: maxTokens,
+                           temperature: temperature,
+                           logitBias: logitBias,
+                           frequencyPenalty: frequencyPenalty,
+                           stop: stop,
+                           logProbs: 5)
         let request = prepareRequest(endpoint, body: body)
         
         makeRequest(request: request) { result in
@@ -306,7 +320,7 @@ extension OpenAISwift {
         if let encoded = try? encoder.encode(body) {
             request.httpBody = encoded
         }
-        
+
         return request
     }
 }
