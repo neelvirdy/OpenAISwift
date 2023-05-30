@@ -17,6 +17,13 @@ public struct OpenAI<T: Payload>: Codable {
 
 public struct TextResult: Payload {
     public let text: String
+    public let logprobs: LogProbs?
+}
+
+public struct LogProbs: Payload {
+    public let tokens: [String]
+    public let token_logprobs: [Double]
+    public let top_logprobs: [[String: Double]]
 }
 
 public struct MessageResult: Payload {

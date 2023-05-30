@@ -55,7 +55,8 @@ extension OpenAISwift {
                            temperature: temperature,
                            logitBias: logitBias,
                            frequencyPenalty: frequencyPenalty,
-                           stop: stop)
+                           stop: stop,
+                           logProbs: 5)
         let request = prepareRequest(endpoint, body: body)
         
         makeRequest(request: request) { result in

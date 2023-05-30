@@ -18,6 +18,8 @@ struct Command: Encodable {
 
     /// An array of up to 4 sequences where the API will stop generating further tokens. Optional.
     let stop: [String]?
+
+    let logProbs: Int?
     
     enum CodingKeys: String, CodingKey {
         case prompt
@@ -27,5 +29,6 @@ struct Command: Encodable {
         case logitBias = "logit_bias"
         case frequencyPenalty = "frequency_penalty"
         case stop
+        case logProbs = "logprobs"
     }
 }
