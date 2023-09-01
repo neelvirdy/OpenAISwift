@@ -13,7 +13,6 @@ public enum OpenAIError: Error {
 public class OpenAISwift {
     fileprivate(set) var token: String?
     fileprivate let config: Config
-    fileprivate let handler = ServerSentEventsHandler()
 
     /// Configuration object for the client
     public struct Config {
@@ -258,6 +257,7 @@ extension OpenAISwift {
                                     logitBias: logitBias,
                                     stream: true)
         let request = prepareRequest(endpoint, body: body)
+        let handler = ServerSentEventsHandler()
         handler.onEventReceived = onEventReceived
         handler.onComplete = onComplete
         handler.connect(with: request)
